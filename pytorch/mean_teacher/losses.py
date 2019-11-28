@@ -9,7 +9,6 @@
 
 import torch
 from torch.nn import functional as F
-from torch.autograd import Variable
 
 
 def softmax_mse_loss(input_logits, target_logits):

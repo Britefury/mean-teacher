@@ -11,6 +11,7 @@ import threading
 import time
 import logging
 import os
+import torch
 
 from pandas import DataFrame
 from collections import defaultdict
@@ -38,8 +39,13 @@ class TrainLog:
         df.to_msgpack(self.log_file_path, compress='zlib')
 
     def _record(self, step, col_val_dict):
+        fixed_col_val_dict = dict()
+        for key, val in col_val_dict.items():
+            if isinstance(val, torch.Tensor):
+                val = val.item()
+            fixed_col_val_dict[key] = val
         with self._log_lock:
-            self._log[step].update(col_val_dict)
+            self._log[step].update(fixed_col_val_dict)
             if time.time() - self._last_update_time >= self.INCREMENTAL_UPDATE_TIME:
                 self._last_update_time = time.time()
                 self.save()
