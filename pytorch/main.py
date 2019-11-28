@@ -373,7 +373,8 @@ def validate(eval_loader, model, log, global_step, epoch, torch_device):
 
 
 def save_checkpoint(state, is_best, dirpath, epoch):
-    filename = 'checkpoint.{}.ckpt'.format(epoch)
+    # filename = 'checkpoint.{}.ckpt'.format(epoch)
+    filename = 'checkpoint.latest.ckpt'.format(epoch)
     checkpoint_path = os.path.join(dirpath, filename)
     best_path = os.path.join(dirpath, 'best.ckpt')
     torch.save(state, checkpoint_path)
