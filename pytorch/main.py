@@ -222,7 +222,7 @@ def train(train_loader, model, ema_model, optimizer, epoch, log, torch_device):
 
         input_var = input.to(torch_device)
         ema_input_var = ema_input.to(torch_device)
-        target_var = target_var.to(torch_device)
+        target_var = target.to(torch_device)
 
         minibatch_size = len(target_var)
         labeled_minibatch_size = (target_var != NO_LABEL).sum()
